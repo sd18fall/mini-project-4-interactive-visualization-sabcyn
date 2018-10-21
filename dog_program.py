@@ -1,5 +1,7 @@
 
-# import pygame
+import pygame
+import inquirer
+
 
 #LISTS:
 size_list = ['small', 'medium', 'large']
@@ -7,7 +9,7 @@ furlength_list = ['short', 'medium', 'long']
 personality_list = ['friendly', 'protective']
 dog_attributes = [size_list,furlength_list,personality_list]
 
-class Characteristics():
+class Characteristics(object):
     def __init__(self, size, furlength, personality):
         self.size = size
         self.furlength = furlength
@@ -23,34 +25,50 @@ class Dog(object):
         self.breed = breed
         self.characteristics = characteristics
 
-    # def __str__(self):
-    #     return self.breed
-
     def __repr__(self):
         return self.breed
 
+        # + ' ' + self.characteristics.size + ' ' + self.characteristics.furlength + ' ' + self.characteristics.personality
+
 Dog_list = []
+Name_list = ['Lab', 'Yorkie', 'Golden', 'Pug', 'Pomeranian', 'Poodle', 'Bulldog', 'Pitbull', 'Corgi', 'CockerSpaniel', 'BorderCollie', 'Chihuahua', 'German', 'Boxer', 'Maltese', 'Husky', 'Terrier', 'Sheepdog']
+i = 0
 for size in size_list:
     for fur in furlength_list:
         for personality in personality_list:
-            Dog_list.append(Dog('Lab', Characteristics(size, fur, personality)))
+                Dog_list.append(Dog(Name_list[i], Characteristics(size, fur, personality)))
+                i += 1
 
-def modify_list(user_input, doglist, characteristic):
-    """
-    >>> modify_list('small', [Dog('Yorkie',Characteristics('small','long','friendly'))], 'size')
+def filter_doglist(user_input, doglist, characteristic):
+    """ aslkdjfaskldjfaskldfjasdf types of input, what we would return
+    >>> filter_doglist('small', [Dog('Yorkie',Characteristics('small','long','friendly'))], 'size')
     [Yorkie]
-    >>> modify_list('large', [Dog('Yorkie',Characteristics('small','long','friendly'))], 'size')
+    >>> filter_doglist('large', [Dog('Yorkie',Characteristics('small','long','friendly'))], 'size')
     []
     """
-    for dog in doglist:
-        if getattr(dog.characteristics,characteristic) != user_input:
-            doglist.remove(dog)
+    for i in range(len(doglist)-1,-1,-1):
+        if getattr(doglist[i].characteristics,characteristic) != user_input:
+            Dog_list.remove(doglist[i])
     return doglist
 
-if __name__ == '__main__':
-    # Yorkie = Dog('Yorkie',Characteristics('small','medium','friendly'))
-    # Doglist = [Yorkie]
-    # print (modify_list('large', Doglist, 'size'))
 
-    import doctest
-    doctest.run_docstring_examples(modify_list, globals(), verbose=True)
+if __name__ == '__main__':
+
+    print (Dog_list)
+
+    question1 = [inquirer.List('size', message = 'Ideal Size?', choices = size_list)]
+    answer1 = inquirer.prompt(question1)
+    print (filter_doglist(answer1['size'], Dog_list, 'size'))
+
+    question2 = [inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list)]
+    answer2 = inquirer.prompt(question2)
+    print (filter_doglist(answer2['furlength'], Dog_list, 'furlength'))
+
+    question3 = [inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
+    answer3 = inquirer.prompt(question3)
+    print (filter_doglist(answer3['personality'], Dog_list, 'personality'))
+
+
+
+    # import doctest
+    # doctest.run_docstring_examples(modify_list, globals(), verbose=True)
