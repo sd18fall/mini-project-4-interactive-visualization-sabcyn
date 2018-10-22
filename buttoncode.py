@@ -2,6 +2,7 @@
 
 import pygame
 import inquirer
+import dog_program
 
 pygame.init()
 win = pygame.display.set_mode((600,600))
@@ -75,7 +76,7 @@ while run:
 
         if event.type == pygame.QUIT:
             run = False
-            pygame.quit()
+            pygame.quit()b
             quit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -83,6 +84,7 @@ while run:
                 if b.isOver(pos):
                     user_input = b.text
                     print (user_input)
+                    print (filter_doglist(user_input, Dog_list, 'furlength'))
 
 
         # if event.type == pygame.MOUSEMOTION :
@@ -92,145 +94,4 @@ while run:
         #         greenButton1.color = (0,225,0)
 
 
-
-
-
-
-# counter = 0
-# def counter_label(label):
-#   counter = 0
-#   def count():
-#     global counter
-#     counter += 1
-#     label.config(text=str(counter))
-#     label.after(1000, count)
-#   count()
-#
-# def print2():
-#     print ('helloooooo')
-#
-# root = tk.Tk()
-# root.title("Counting Seconds")
-# label = tk.Label(root, fg="dark green")
-# label.pack()
-# counter_label(label)
-# button = tk.Button(root, text='Stop', width=25, command=print2)
-# button.pack()
-# root.mainloop()
-
-
-# def button():
-#
-#     intro = True
-#
-#     while intro:
-#         for event in pygame.event.get():
-#             print(event)
-#             if event.type == pygame.QUIT:
-#                 pygame.quit()
-#                 quit()
-#
-#         gameDisplay.fill(white)
-#         largeText = pygame.font.Font('freesansbold.ttf',115)
-#
-#         pygame.draw.rect(gameDisplay, green,(150,450,100,50))
-#         pygame.draw.rect(gameDisplay, red,(550,450,100,50))
-#
-#         mouse = pygame.mouse.get_pos()
-#
-#         if 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-#             pygame.draw.rect(gameDisplay, bright_green,(150,450,100,50))
-#         else:
-#             pygame.draw.rect(gameDisplay, green,(150,450,100,50))
-#
-#         smallText = pygame.font.Font("freesansbold.ttf",20)
-#         textSurf, textRect = text_objects("SMALL", smallText)
-#         textRect.center = ( (150+(100/2)), (450+(50/2)) )
-#         gameDisplay.blit(textSurf, textRect)
-#
-#
-#         pygame.draw.rect(gameDisplay, red,(550,450,100,50))
-#
-#         pygame.display.update()
-#         clock.tick(15)
-#
-#
-#
-#         # if 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-#         #     pygame.draw.rect(gameDisplay, bright_green,(150,450,100,50))
-#         # print ("CHANE")
-#         # else:
-#         #     pygame.draw.rect(gameDisplay, green,(150,450,100,50))
-#         # pygame.draw.rect(gameDisplay, red,(550,450,100,50))
-#         # pygame.display.update()
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#         # #print(mouse)
-#         #     # This block is executed once for each MOUSEBUTTONDOWN event.
-#         # if event.type == pygame.MOUSEBUTTONDOWN:
-#         #     # 1 is the left mouse button, 2 is middle, 3 is right.
-#         #     if event.button == 1:
-#         #         # `event.pos` is the mouse position.
-#         #         if button.collidepoint(event.pos):
-#         #             # Increment the number.
-#         #             number += 1
-#         # pygame.display.update()
-#         # if 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-#         #     pygame.draw.rect(gameDisplay, bright_green,(150,450,100,50))
-#         # else:
-#         #     pygame.draw.rect(gameDisplay, green,(150,450,100,50))
-#         # pygame.draw.rect(gameDisplay, green,(550,450,100,50))
-#         # pygame.display.update()
-#
-# # def loop():
-# #     # clock = pygame.time.Clock()
-# #     number = 0
-# #     # The button is just a rect.
-# #     button = pygame.Rect(0, 100, 200, 200)
-# #     done = False
-# #     while not done:
-# #         for event in pygame.event.get():
-# #             if event.type == pygame.QUIT:
-# #                 done = True
-# #             # This block is executed once for each MOUSEBUTTONDOWN event.
-# #             elif event.type == pygame.MOUSEBUTTONDOWN:
-# #                 # 1 is the left mouse button, 2 is middle, 3 is right.
-# #                 if event.button == 1:
-# #                     # `event.pos` is the mouse position.
-# #                     if button.collidepoint(event.pos):
-# #                         # Increment the number.
-# #                         number += 1
-#
-#         # screen.fill(WHITE)
-#         # pygame.draw.rect(screen, GRAY, button)
-#         # text_surf = FONT.render(str(number), True, BLACK)
-#         # You can pass the center directly to the `get_rect` method.
-#         # text_rect = text_surf.get_rect(center=(width/2, 30))
-#         # screen.blit(text_surf, text_rect)
-#         # pygame.display.update()
-#
-#
-#
-# pygame.init()
-#
-# display_width = 800
-# display_height = 600
-#
-# white = (255,255,255)
-# red = (200,0,0)
-# green = (0,200,0)
-#
-# bright_red = (255,0,0)
-# bright_green = (0,255,0)
-#
-# gameDisplay = pygame.display.set_mode((display_width, display_height))
-# pygame.display.set_caption('YOUR IDEAL DOG TEST')
-# button()
+if __name__ == '__main__':
