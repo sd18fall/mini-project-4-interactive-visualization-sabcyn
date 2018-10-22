@@ -2,14 +2,10 @@
 
 import pygame
 import inquirer
-import dog_program
 
 pygame.init()
 win = pygame.display.set_mode((600,600))
 win.fill((255,255,255))
-
-
-
 
 #LISTS:
 size_list = ['small', 'medium', 'large']
@@ -57,8 +53,7 @@ def filter_doglist(user_input, doglist, characteristic):
             Dog_list.remove(doglist[i])
     return doglist
 
-
-
+#BUTTON CLASS
 class button():
     def __init__(self, color, x,y,width,height, text=''):
         self.color = color
@@ -96,9 +91,9 @@ def buttongenerator(i=0):
     furlength_list = ['short', 'medium', 'long']
     personality_list = ['friendly', 'protective']
 
-    qlist = [inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list)]
-    question = qlist[i].message
+    qlist = [inquirer.List('size', message = 'Ideal Size?', choices = size_list),inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list),inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
 
+    question = qlist[i].message
 
     questionbutton = button((0,255,0),275,50,100, 75, question)
     questionbutton.draw(win, (0,0,0))
@@ -112,14 +107,12 @@ def buttongenerator(i=0):
     return buttonlist
 
 
-
 if __name__ == '__main__':
 
     print (Dog_list)
-
-
+    i = 0
     while run:
-        buttonlist = buttongenerator()
+        buttonlist = buttongenerator(i)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -134,23 +127,6 @@ if __name__ == '__main__':
                 for b in buttonlist:
                     if b.isOver(pos):
                         user_input = b.text
-                        print (user_input)
-                        print (filter_doglist('short', Dog_list, 'furlength'))
-
-    #
-    # question1 = [inquirer.List('size', message = 'Ideal Size?', choices = size_list)]
-    # answer1 = inquirer.prompt(question1)
-    # print (filter_doglist(answer1['size'], Dog_list, 'size'))
-    #
-    # question2 = [inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list)]
-    # answer2 = inquirer.prompt(question2)
-    # print (filter_doglist(answer2['furlength'], Dog_list, 'furlength'))
-    #
-    # question3 = [inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
-    # answer3 = inquirer.prompt(question3)
-    # print (filter_doglist(answer3['personality'], Dog_list, 'personality'))
-
-
-
-    # import doctest
-    # doctest.run_docstring_examples(modify_list, globals(), verbose=True)
+                        print (filter_doglist(user_input, Dog_list, qlist[i].name))
+                        if i < 3:
+                            i += 1
