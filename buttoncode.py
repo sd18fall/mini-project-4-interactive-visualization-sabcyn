@@ -1,6 +1,7 @@
 
 
 import pygame
+import inquirer
 
 pygame.init()
 win = pygame.display.set_mode((600,600))
@@ -35,22 +36,38 @@ class button():
 
         return False
 
-def redrawWindow():
-    win.fill((225,255,255))
-    greenButton1.draw(win, (0,0,0))
-    greenButton2.draw(win, (0,0,0))
-    greenButton3.draw(win, (0,0,0))
-    questionbutton.draw(win, (0,0,0))
+# def redrawWindow():
+#     win.fill((225,255,255))
+#     greenButton1.draw(win, (0,0,0))
+#     greenButton2.draw(win, (0,0,0))
+#     greenButton3.draw(win, (0,0,0))
+#     questionbutton.draw(win, (0,0,0))
 
 run = True
 
-greenButton1 = button((0,255,0), 100,225,100, 75, 'Ideal Size? :)')
-greenButton2 = button((0,255,0), 250,225,100, 75, 'Ideal Furlength? :D')
-greenButton3 = button((0,255,0), 400,225,100, 75, 'Ideal Personality? :]')
-questionbutton = button((0,255,0), 200,100,100, 50, 'Question 1')
+def buttongenerator(i=0):
+    win.fill((225,255,255))
+    size_list = ['small', 'medium', 'large']
+    furlength_list = ['short', 'medium', 'long']
+    personality_list = ['friendly', 'protective']
+
+    qlist = [inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list)]
+    question = qlist[i].message
+
+
+    questionbutton = button((0,255,0),275,50,100, 75, question)
+    questionbutton.draw(win, (0,0,0))
+    incrementx = 0
+    buttonlist = []
+    for choice in qlist[i].choices:
+        b = button((0,255,0), 100 + incrementx, 225, 100, 75, choice)
+        buttonlist.append(b)
+        b.draw(win, (0,0,0))
+        incrementx += 150
+    return buttonlist
 
 while run:
-    redrawWindow()
+    buttonlist = buttongenerator()
     pygame.display.update()
 
     for event in pygame.event.get():
@@ -61,15 +78,18 @@ while run:
             pygame.quit()
             quit()
 
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     if greenButton1.isOver(pos):
-        #         print ('clicked')
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for b in buttonlist:
+                if b.isOver(pos):
+                    user_input = b.text
+                    print (user_input)
 
-        if event.type == pygame.MOUSEMOTION :
-            if greenButton1.isOver(pos):
-                greenButton1.color = (225,0,0)
-            else:
-                greenButton1.color = (0,225,0)
+
+        # if event.type == pygame.MOUSEMOTION :
+        #     if greenButton1.isOver(pos):
+        #         greenButton1.color = (225,0,0)
+        #     else:
+        #         greenButton1.color = (0,225,0)
 
 
 
