@@ -8,11 +8,15 @@ win = pygame.display.set_mode((600,600))
 win.fill((255,255,255))
 
 #LISTS:
-size_list = ['small', 'medium', 'large']
-furlength_list = ['short', 'medium', 'long']
-personality_list = ['friendly', 'protective']
+size_list = ['Small', 'Medium', 'Large']
+furlength_list = ['Short', 'Medium', 'Long']
+personality_list = ['Friendly', 'Laid-back', 'Active']
 dog_attributes = [size_list,furlength_list,personality_list]
 qlist = [inquirer.List('size', message = 'Ideal Size?', choices = size_list),inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list),inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
+
+Beginning = True
+Middle = False
+End = False
 
 class Characteristics(object):
     def __init__(self, size, furlength, personality):
@@ -32,14 +36,37 @@ class Dog(object):
     def __repr__(self):
         return self.breed + ' ' + self.characteristics.size + ' ' + self.characteristics.furlength + ' ' + self.characteristics.personality
 
-Dog_list = []
-Name_list = ['Lab', 'Yorkie', 'Golden', 'Pug', 'Pomeranian', 'Poodle', 'Bulldog', 'Pitbull', 'Corgi', 'CockerSpaniel', 'BorderCollie', 'Chihuahua', 'German', 'Boxer', 'Maltese', 'Husky', 'Terrier', 'Sheepdog']
-i = 0
-for size in size_list:
-    for fur in furlength_list:
-        for personality in personality_list:
-                Dog_list.append(Dog(Name_list[i], Characteristics(size, fur, personality)))
-                i += 1
+# Dog_list = []
+Lab = Dog('Lab', Characteristics('Large', 'Short', 'Friendly'))
+Yorkie = Dog('Yorkie', Characteristics('Small', 'Long', 'Friendly'))
+Golden_Retriever = Dog('Golden', Characteristics('Large', 'Long', 'Friendly'))
+Pug = Dog('Pug', Characteristics('Small', 'Short', 'Laid-back'))
+Pomeranian = Dog('Pomeranian', Characteristics('Small', 'Long', 'Active'))
+Poodle = Dog('Poodle', Characteristics('Large', 'Medium', 'Friendly'))
+Bulldog = Dog('Bulldog', Characteristics('Medium', 'Short', 'Laid-back'))
+Pitbull = Dog('Pitbull', Characteristics('Large', 'Short', 'Active'))
+Corgi = Dog('Corgi', Characteristics('Medium', 'Long', 'Friendly'))
+Cocker_Spaniel = Dog('CockerSpaniel', Characteristics('Medium', 'Long', 'Laid-back'))
+Border_Collie = Dog('BorderCollie', Characteristics('Large', 'Long', 'Active'))
+Chihuahua = Dog('Chihuahua', Characteristics('Small', 'Short', 'Active'))
+German_Shepard = Dog('German', Characteristics('Large', 'Short', 'Active'))
+Boxer = Dog('Boxer', Characteristics('Large', 'Short', 'Active'))
+Maltese = Dog('Maltese', Characteristics('Small', 'Long', 'Laid-back'))
+Husky = Dog('Husky', Characteristics('Large', 'Medium', 'Active'))
+Terrier = Dog('Terrier', Characteristics('Small', 'Medium', 'Active'))
+Sheepdog = Dog('Sheepdog', Characteristics('Large', 'Medium','Active'))
+
+# Name_list = ['Lab', 'Yorkie', 'Golden', 'Pug', 'Pomeranian', 'Poodle', 'Bulldog', 'Pitbull', 'Corgi', 'CockerSpaniel', 'BorderCollie', 'Chihuahua', 'German', 'Boxer', 'Maltese', 'Husky', 'Terrier', 'Sheepdog']
+
+Dog_list = [Lab, Yorkie, Golden_Retriever, Pug, Pomeranian, Poodle, Bulldog, Pitbull, Corgi, Cocker_Spaniel, Border_Collie, Chihuahua, German_Shepard, Boxer, Maltese, Husky, Terrier, Sheepdog]
+
+
+# i = 0
+# for size in size_list:
+#     for fur in furlength_list:
+#         for personality in personality_list:
+#                 Dog_list.append(Dog(Name_list[i], Characteristics(size, fur, personality)))
+#                 i += 1
 
 def filter_doglist(user_input, doglist, characteristic):
     """ aslkdjfaskldjfaskldfjasdf types of input, what we would return
@@ -71,7 +98,8 @@ class button():
         pygame.draw.rect(win, self.color, (self.x,self.y,self.width,self.height),0)
 
         if self.text != '':
-            font = pygame.font.SysFont('comicsans', 15)
+
+            font = pygame.font.SysFont('comicsans', 20)
             text = font.render(self.text, 1, (0,0,0))
             win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
 
@@ -109,22 +137,51 @@ if __name__ == '__main__':
 
     print (Dog_list)
     i = 0
+
+    # start = button((0,255,0), 250, 200, 200, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
+    # start.draw(win, (0,0,0))
+
+    # if event.type == pygame.MOUSEBUTTONDOWN:
+
     while run:
-        buttonlist = buttongenerator(i)
+        # buttonlist = buttongenerator(i)
         pygame.display.update()
 
         for event in pygame.event.get():
             pos = pygame.mouse.get_pos()
 
-            if event.type == pygame.QUIT:
-                run = False
-                pygame.quit()
-                quit()
+        if event.type == pygame.QUIT:
+            run = False
+            pygame.quit()
+            quit()
 
+        if Beginning == True:
+            Page1 = button((0,255,0), 30, 200, 550, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
+
+            Start = button((0,255,0), 250, 330, 100, 50, text='LETS DO IT !')
+
+            Page1.draw(win, (0,0,0))
+            Start.draw(win, (0,0,0))
+
+            if event.type = pygame.MOUSEBUTTONDOWN:
+                if Start.isOver(pos):
+                    Beginning = False
+                    Middle = True
+        if Middle == True:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for b in buttonlist:
                     if b.isOver(pos):
                         user_input = b.text
                         print (filter_doglist(user_input, Dog_list, qlist[i].name))
-                        if i < 3:
+                        if i < 2:
                             i += 1
+                        if i == 2:
+                            Middle = False
+                            End = True
+        if End == True:
+            Page1 = button((0,255,0), 30, 200, 550, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
+
+            Start = button((0,255,0), 250, 330, 100, 50, text='LETS DO IT !')
+
+            Page1.draw(win, (0,0,0))
+            Start.draw(win, (0,0,0))
