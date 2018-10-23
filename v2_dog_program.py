@@ -12,6 +12,7 @@ size_list = ['small', 'medium', 'large']
 furlength_list = ['short', 'medium', 'long']
 personality_list = ['friendly', 'protective']
 dog_attributes = [size_list,furlength_list,personality_list]
+qlist = [inquirer.List('size', message = 'Ideal Size?', choices = size_list),inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list),inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
 
 class Characteristics(object):
     def __init__(self, size, furlength, personality):
@@ -21,7 +22,6 @@ class Characteristics(object):
 
     def __str__(self):
         return self.size + ' ' + self.furlength + ' ' + self.personality
-
 
 class Dog(object):
     """  """
@@ -90,8 +90,6 @@ def buttongenerator(i=0):
     size_list = ['small', 'medium', 'large']
     furlength_list = ['short', 'medium', 'long']
     personality_list = ['friendly', 'protective']
-
-    qlist = [inquirer.List('size', message = 'Ideal Size?', choices = size_list),inquirer.List('furlength', message = 'Ideal Fur Length?', choices = furlength_list),inquirer.List('personality', message = 'Ideal Personality?', choices = personality_list)]
 
     question = qlist[i].message
 
