@@ -144,7 +144,6 @@ if __name__ == '__main__':
     # if event.type == pygame.MOUSEBUTTONDOWN:
 
     while run:
-        # buttonlist = buttongenerator(i)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -163,21 +162,22 @@ if __name__ == '__main__':
             Page1.draw(win, (0,0,0))
             Start.draw(win, (0,0,0))
 
-            if event.type = pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if Start.isOver(pos):
                     Beginning = False
                     Middle = True
         if Middle == True:
+            buttonlist = buttongenerator(i)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for b in buttonlist:
                     if b.isOver(pos):
                         user_input = b.text
                         print (filter_doglist(user_input, Dog_list, qlist[i].name))
-                        if i < 2:
+                        if i < 3:
                             i += 1
-                        if i == 2:
-                            Middle = False
-                            End = True
+                            if i == 3:
+                                Middle = False
+                                End = True
         if End == True:
             Page1 = button((0,255,0), 30, 200, 550, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
 
