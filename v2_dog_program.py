@@ -5,7 +5,7 @@ import inquirer
 
 pygame.init()
 win = pygame.display.set_mode((600,600))
-win.fill((255,255,255))
+win.fill((43, 226, 229))
 
 #LISTS:
 size_list = ['Small', 'Medium', 'Large']
@@ -29,44 +29,34 @@ class Characteristics(object):
 
 class Dog(object):
     """  """
-    def __init__(self, breed, characteristics):
+    def __init__(self, breed, characteristics, photofile= None):
         self.breed = breed
         self.characteristics = characteristics
+        self.photofile = photofile
 
     def __repr__(self):
         return self.breed + ' ' + self.characteristics.size + ' ' + self.characteristics.furlength + ' ' + self.characteristics.personality
 
-# Dog_list = []
-Lab = Dog('Lab', Characteristics('Large', 'Short', 'Friendly'))
-Yorkie = Dog('Yorkie', Characteristics('Small', 'Long', 'Friendly'))
-Golden_Retriever = Dog('Golden', Characteristics('Large', 'Long', 'Friendly'))
-Pug = Dog('Pug', Characteristics('Small', 'Short', 'Laid-back'))
-Pomeranian = Dog('Pomeranian', Characteristics('Small', 'Long', 'Active'))
-Poodle = Dog('Poodle', Characteristics('Large', 'Medium', 'Friendly'))
-Bulldog = Dog('Bulldog', Characteristics('Medium', 'Short', 'Laid-back'))
-Pitbull = Dog('Pitbull', Characteristics('Large', 'Short', 'Active'))
-Corgi = Dog('Corgi', Characteristics('Medium', 'Long', 'Friendly'))
-Cocker_Spaniel = Dog('CockerSpaniel', Characteristics('Medium', 'Long', 'Laid-back'))
-Border_Collie = Dog('BorderCollie', Characteristics('Large', 'Long', 'Active'))
-Chihuahua = Dog('Chihuahua', Characteristics('Small', 'Short', 'Active'))
-German_Shepard = Dog('German', Characteristics('Large', 'Short', 'Active'))
-Boxer = Dog('Boxer', Characteristics('Large', 'Short', 'Active'))
-Maltese = Dog('Maltese', Characteristics('Small', 'Long', 'Laid-back'))
-Husky = Dog('Husky', Characteristics('Large', 'Medium', 'Active'))
-Terrier = Dog('Terrier', Characteristics('Small', 'Medium', 'Active'))
-Sheepdog = Dog('Sheepdog', Characteristics('Large', 'Medium','Active'))
-
-# Name_list = ['Lab', 'Yorkie', 'Golden', 'Pug', 'Pomeranian', 'Poodle', 'Bulldog', 'Pitbull', 'Corgi', 'CockerSpaniel', 'BorderCollie', 'Chihuahua', 'German', 'Boxer', 'Maltese', 'Husky', 'Terrier', 'Sheepdog']
+Lab = Dog('Lab', Characteristics('Large', 'Short', 'Friendly'), 'Lab.jpeg')
+Yorkie = Dog('Yorkie', Characteristics('Small', 'Long', 'Friendly'), 'Yorkie.jpeg')
+Golden_Retriever = Dog('Golden Retriever', Characteristics('Large', 'Long', 'Friendly'), 'Golden_Retriever.jpeg')
+Pug = Dog('Pug', Characteristics('Small', 'Short', 'Laid-back'), 'Pug.jpeg')
+Pomeranian = Dog('Pomeranian', Characteristics('Small', 'Long', 'Active'), 'Pomeranian.jpeg')
+Poodle = Dog('Poodle', Characteristics('Large', 'Medium', 'Friendly'), 'Poodle.jpeg')
+Bulldog = Dog('Bulldog', Characteristics('Medium', 'Short', 'Laid-back'), 'Bulldog.jpeg')
+Pitbull = Dog('Pitbull', Characteristics('Large', 'Short', 'Active'), 'Pitbull.jpeg')
+Corgi = Dog('Corgi', Characteristics('Medium', 'Long', 'Friendly'), 'Corgi.jpeg')
+Cocker_Spaniel = Dog('Cocker-Spaniel', Characteristics('Medium', 'Long', 'Laid-back'), 'Cocker_Spaniel.jpeg')
+Border_Collie = Dog('Border Collie', Characteristics('Large', 'Long', 'Active'), 'Border_Collie.jpeg')
+Chihuahua = Dog('Chihuahua', Characteristics('Small', 'Short', 'Active'), 'Chihuahua.jpeg')
+German_Shepard = Dog('German Shepard', Characteristics('Large', 'Short', 'Active'), 'German_Shepard.jpeg')
+Boxer = Dog('Boxer', Characteristics('Large', 'Short', 'Active'), 'Boxer.jpeg')
+Maltese = Dog('Maltese', Characteristics('Small', 'Long', 'Laid-back'), 'Maltese.jpeg')
+Husky = Dog('Husky', Characteristics('Large', 'Medium', 'Active'), 'Husky.jpeg')
+Terrier = Dog('Terrier', Characteristics('Small', 'Medium', 'Active'), 'Terrier.jpeg')
+Sheepdog = Dog('Sheepdog', Characteristics('Large', 'Medium','Active'),'Sheepdog.jpeg')
 
 Dog_list = [Lab, Yorkie, Golden_Retriever, Pug, Pomeranian, Poodle, Bulldog, Pitbull, Corgi, Cocker_Spaniel, Border_Collie, Chihuahua, German_Shepard, Boxer, Maltese, Husky, Terrier, Sheepdog]
-
-
-# i = 0
-# for size in size_list:
-#     for fur in furlength_list:
-#         for personality in personality_list:
-#                 Dog_list.append(Dog(Name_list[i], Characteristics(size, fur, personality)))
-#                 i += 1
 
 def filter_doglist(user_input, doglist, characteristic):
     """ aslkdjfaskldjfaskldfjasdf types of input, what we would return
@@ -79,6 +69,24 @@ def filter_doglist(user_input, doglist, characteristic):
         if getattr(doglist[i].characteristics,characteristic) != user_input:
             Dog_list.remove(doglist[i])
     return doglist
+
+def display_photos(doglist):
+    i = 0
+    if len(doglist) == 1:
+        win.blit(pygame.image.load(doglist[0].photofile),(225,330))
+        pygame.display.flip()
+
+    if len(doglist) == 2:
+        for dog in doglist:
+            win.blit(pygame.image.load(dog.photofile),(125+i,330))
+            pygame.display.flip()
+            i += 200
+
+    if len(doglist) == 3:
+        for dog in doglist:
+            win.blit(pygame.image.load(dog.photofile),(25+i,330))
+            pygame.display.flip()
+            i += 200
 
 #BUTTON CLASS
 class button():
@@ -99,7 +107,7 @@ class button():
 
         if self.text != '':
 
-            font = pygame.font.SysFont('comicsans', 20)
+            font = pygame.font.SysFont('comicsans', 21)
             text = font.render(self.text, 1, (0,0,0))
             win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
 
@@ -111,64 +119,71 @@ class button():
 
         return False
 
+    def __repr__(self):
+        return self.text
+
+
 run = True
 
 def buttongenerator(i=0):
-    win.fill((225,255,255))
-    size_list = ['small', 'medium', 'large']
-    furlength_list = ['short', 'medium', 'long']
-    personality_list = ['friendly', 'protective']
+    win.fill((43, 226, 229))
 
     question = qlist[i].message
 
-    questionbutton = button((0,255,0),275,50,100, 75, question)
+    questionbutton = button((184, 231, 242),225,150,150, 75, question)
     questionbutton.draw(win, (0,0,0))
     incrementx = 0
-    buttonlist = []
+
+    buttonlist2 = []
     for choice in qlist[i].choices:
-        b = button((0,255,0), 100 + incrementx, 225, 100, 75, choice)
-        buttonlist.append(b)
+        b = button((184, 231, 242), 100 + incrementx, 300, 100, 75, choice)
+        buttonlist2.append(b)
         b.draw(win, (0,0,0))
         incrementx += 150
-    return buttonlist
+    return buttonlist2
 
 
 if __name__ == '__main__':
 
     print (Dog_list)
     i = 0
-
-    # start = button((0,255,0), 250, 200, 200, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
-    # start.draw(win, (0,0,0))
-
-    # if event.type == pygame.MOUSEBUTTONDOWN:
-
-    while run:
+    win.fill((201, 177, 237))
+    while Beginning:
         pygame.display.update()
+
+        Page1 = button((184, 231, 242), 25, 200, 555, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
+        Start = button((184, 231, 242), 250, 330, 100, 50, text='LETS DO IT !')
+        Page1.draw(win, (0,0,0))
+        Start.draw(win, (0,0,0))
 
         for event in pygame.event.get():
             pos = pygame.mouse.get_pos()
 
-        if event.type == pygame.QUIT:
-            run = False
-            pygame.quit()
-            quit()
-
-        if Beginning == True:
-            Page1 = button((0,255,0), 30, 200, 550, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
-
-            Start = button((0,255,0), 250, 330, 100, 50, text='LETS DO IT !')
-
-            Page1.draw(win, (0,0,0))
-            Start.draw(win, (0,0,0))
-
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if Start.isOver(pos):
                     Beginning = False
                     Middle = True
-        if Middle == True:
-            buttonlist = buttongenerator(i)
+    while Middle:
+        buttonlist = buttongenerator(i)
+        pygame.display.update()
+
+        if Dog_list == []:
+            Middle = False
+            SadEnd = True
+
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
+                print(buttonlist)
                 for b in buttonlist:
                     if b.isOver(pos):
                         user_input = b.text
@@ -177,11 +192,46 @@ if __name__ == '__main__':
                             i += 1
                             if i == 3:
                                 Middle = False
-                                End = True
-        if End == True:
-            Page1 = button((0,255,0), 30, 200, 550, 75, text='READY TO DISCOVER YOUR IDEAL DOG? Just answer the following questions!')
+                                if Dog_list == []:
+                                    SadEnd = True
+                                else:
+                                    End = True
 
-            Start = button((0,255,0), 250, 330, 100, 50, text='LETS DO IT !')
+    win.fill((201, 177, 237))
 
-            Page1.draw(win, (0,0,0))
-            Start.draw(win, (0,0,0))
+    while End:
+        pygame.display.update()
+
+        PageEnd = button((184, 231, 242), 30, 100, 550, 75, 'YOUR IDEAL DOG/DOGS:')
+
+        dogs = ''
+        for dog in Dog_list:
+            dogs = dogs + dog.breed + '! '
+
+        End = button((184, 231, 242), 175, 230, 250, 50, dogs)
+        PageEnd.draw(win, (0,0,0))
+        End.draw(win, (0,0,0))
+        display_photos(Dog_list)
+
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                quit()
+    while SadEnd:
+        pygame.display.update()
+
+        PageEnd = button((184, 231, 242), 30, 150, 550, 75, text='No dogs match. You can check out cats! ;)')
+        PageEnd.draw(win, (0,0,0))
+        win.blit(pygame.image.load('SadDog.jpg'),(225,275))
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                quit()
